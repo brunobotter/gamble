@@ -10,12 +10,11 @@
 
 4. Validações e handle de erros basicos
 
-# Proximas features
-
-1. Histórico de Apostas
+5. Histórico de Apostas
    Descrição: Permitir que o usuário visualize o histórico completo de suas apostas, incluindo data, valor apostado, resultado (ganhou ou perdeu) e o saldo após cada aposta.
    E tambem mostrar intervalos de data, exemplo so ver apostas do ultimo mês.
-   Objetivo: Mostrar como o sistema pode registrar e manipular dados para criar uma falsa sensação de controle.
+
+# Proximas features
 
 2. Probabilidade Manipulável
    Descrição: Adicionar uma funcionalidade para alterar a probabilidade de vitória do jogador.

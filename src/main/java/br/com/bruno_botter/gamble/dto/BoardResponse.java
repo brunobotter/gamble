@@ -12,6 +12,12 @@ public class BoardResponse {
     public BoardResponse() {
     }
 
+    public BoardResponse(String boardA, String boardB, String boardC) {
+        this.boardA = boardA;
+        this.boardB = boardB;
+        this.boardC = boardC;
+    }
+
     public String getBoardA() {
         return boardA;
     }

@@ -33,8 +33,8 @@ public class GambleService {
         return gambleRepository.findByClient(client);
     }
 
-    public List<ConsultaResponse> consultar(Client client) throws GambleNotFoundException {
-        List<ConsultaResponse> response = gambleRepository.findClientAndGambleByClientId(client.getClientId());
+    public List<ConsultaResponse> consultar(Client client, LocalDateTime startDate, LocalDateTime endDate) throws GambleNotFoundException {
+        List<ConsultaResponse> response = gambleRepository.findClientAndGambleByClientIdAndDateRange(client.getClientId(), startDate, endDate);
         if(response.isEmpty()){
            throw new GambleNotFoundException("Gamble not found!");
         }

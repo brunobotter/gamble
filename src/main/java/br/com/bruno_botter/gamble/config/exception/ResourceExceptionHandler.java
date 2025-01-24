@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
@@ -45,6 +46,7 @@ public class ResourceExceptionHandler {
                 "Error", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandartError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 
@@ -55,6 +57,18 @@ public class ResourceExceptionHandler {
         }
 
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<StandartError> validation(MethodArgumentTypeMismatchException e, HttpServletRequest request) {
+
+        ValidationError err = new ValidationError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                "Validation Error", e.getMessage(), request.getRequestURI());
+
+            err.addError(e.getName(), e.getMessage());
+
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
     @ExceptionHandler(NoSuchElementException.class)

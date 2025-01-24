@@ -11,10 +11,12 @@ import br.com.bruno_botter.gamble.service.ClientService;
 import br.com.bruno_botter.gamble.service.GambleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -39,10 +41,14 @@ public class GambleController {
     }
 
     @GetMapping("/consultar/{username}")
-    public ResponseEntity<?> consultarApostas(@PathVariable String username) throws UserNotFoundException, GambleNotFoundException {
+    public ResponseEntity<List<ConsultaResponse>> consultarApostas(
+            @PathVariable String username,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate)
+            throws UserNotFoundException, GambleNotFoundException {
         Client client = clientService.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found!"));
-        List<ConsultaResponse> response = gambleService.consultar(client);
+        List<ConsultaResponse> response = gambleService.consultar(client, startDate, endDate);
         return ResponseEntity.ok(response);
     }
 }
