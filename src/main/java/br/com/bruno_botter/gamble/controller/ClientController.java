@@ -33,18 +33,32 @@ public class ClientController {
 
     // Buscar um cliente por email
     @GetMapping("/email/{email}")
-    public ResponseEntity<Client> getClientByEmail(@PathVariable String email) {
+    public ResponseEntity<ClientResponse> getClientByEmail(@PathVariable String email) {
         Optional<Client> client = clientService.findByEmail(email);
-        return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return client.map(c -> {
+            ClientResponse response = new ClientResponse(c);
+            return ResponseEntity.ok(response);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Buscar um cliente por CPF
     @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<Client> getClientByCpf(@PathVariable String cpf) {
+    public ResponseEntity<ClientResponse> getClientByCpf(@PathVariable String cpf) {
         Optional<Client> client = clientService.findByCpf(cpf);
-        return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return client.map(c -> {
+            ClientResponse response = new ClientResponse(c);
+            return ResponseEntity.ok(response);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
+    // Buscar um cliente por CPF
+    @GetMapping("/user/{username}")
+    public ResponseEntity<ClientResponse> getClientByUsername(@PathVariable String username) {
+        Optional<Client> client = clientService.findByUsername(username);
+        return client.map(c -> {
+            ClientResponse response = new ClientResponse(c);
+            return ResponseEntity.ok(response);
+                }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
 }

@@ -24,7 +24,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Client client = new Client("jorge", "jorge@gmail.com", "123456", "79795920006", BigDecimal.ZERO);
+        Client client = new Client("jorge", "jorge@gmail.com", "123456", "79795920006", BigDecimal.ZERO, "botter");
         Client client2 =  clientService.save(client);
         Deposit deposit = new Deposit(client2, "pix", new BigDecimal(100));
         depositService.depositAmount(deposit);

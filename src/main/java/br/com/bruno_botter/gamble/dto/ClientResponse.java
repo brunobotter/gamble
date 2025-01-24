@@ -23,6 +23,8 @@ public class ClientResponse {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime createAt;
 
+    private String username;
+
     public ClientResponse() {
     }
 
@@ -34,6 +36,7 @@ public class ClientResponse {
         this.cpf = client.getCpf();
         this.saldo = client.getSaldo();
         this.createAt = client.getCreateAt();
+        this.username = client.getUsername();
     }
 
     public long getClientId() {
@@ -62,5 +65,9 @@ public class ClientResponse {
 
     public LocalDateTime getCreateAt() {
         return createAt;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

@@ -1,9 +1,8 @@
 package br.com.bruno_botter.gamble.dto;
 
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.math.BigDecimal;
@@ -26,6 +25,9 @@ public class ClientRequest {
     @CPF(message = "O CPF é obrigatório.")
     private String cpf;
 
+    @NotBlank(message = "O username é obrigatório.")
+    @Size(min = 5, max = 50, message = "Deve conter entre 5 e 50 digitos")
+    private String username;
 
     public @NotBlank(message = "O nome é obrigatório.") String getName() {
         return name;
@@ -43,4 +45,7 @@ public class ClientRequest {
         return cpf;
     }
 
+    public @NotBlank(message = "O username é obrigatório.") @Size(min = 5, max = 50, message = "Deve conter entre 5 e 50 digitos") String getUsername() {
+        return username;
+    }
 }

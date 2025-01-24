@@ -31,6 +31,20 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<StandartError> UserNotFound(UserNotFoundException e, HttpServletRequest request) {
+
+        ValidationError err = new ValidationError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                "Error", e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+    @ExceptionHandler(GambleNotFoundException.class)
+    public ResponseEntity<StandartError> GambleNotFound(GambleNotFoundException e, HttpServletRequest request) {
+
+        ValidationError err = new ValidationError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                "Error", e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandartError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 

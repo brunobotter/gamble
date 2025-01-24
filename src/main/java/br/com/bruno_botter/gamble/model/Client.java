@@ -25,15 +25,19 @@ public class Client {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
+    @Column(unique = true)
+    private String username;
+
     public Client() {
     }
 
-    public Client(String name, String email, String password, String cpf, BigDecimal saldo) {
+    public Client(String name, String email, String password, String cpf, BigDecimal saldo, String username) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.cpf = cpf;
         this.saldo = saldo;
+        this.username = username;
     }
 
     public static Client fromDTO(ClientRequest dto) {
@@ -45,6 +49,7 @@ public class Client {
         client.setSaldo(new BigDecimal(0));
         client.setCreateAt(LocalDateTime.now());
         client.setUpdateAt(LocalDateTime.now());
+        client.setUsername(dto.getUsername());
         return client;
     }
     public String getName() {
@@ -107,4 +112,11 @@ public class Client {
         this.updateAt = updateAt;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

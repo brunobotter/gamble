@@ -27,6 +27,10 @@ public class ClientService{
         return clientRepository.findByCpf(cpf);
     }
 
+    public Optional<Client> findByUsername(String username) {
+        return clientRepository.findByUsername(username);
+    }
+
     public Client save(Client client) {
         try{
         return clientRepository.save(client);

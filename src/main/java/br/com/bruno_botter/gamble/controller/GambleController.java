@@ -1,5 +1,8 @@
 package br.com.bruno_botter.gamble.controller;
 
+import br.com.bruno_botter.gamble.config.exception.GambleNotFoundException;
+import br.com.bruno_botter.gamble.config.exception.UserNotFoundException;
+import br.com.bruno_botter.gamble.dto.ConsultaResponse;
 import br.com.bruno_botter.gamble.dto.GambleRequest;
 import br.com.bruno_botter.gamble.dto.GambleResponse;
 import br.com.bruno_botter.gamble.model.Client;
@@ -10,10 +13,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/gamble")
@@ -34,5 +36,13 @@ public class GambleController {
         Gamble gamble = Gamble.fromDto(client, gambleRequest);
         Gamble gambleResult  = gambleService.gamble(gamble);
         return ResponseEntity.ok(new GambleResponse(gambleResult));
+    }
+
+    @GetMapping("/consultar/{username}")
+    public ResponseEntity<?> consultarApostas(@PathVariable String username) throws UserNotFoundException, GambleNotFoundException {
+        Client client = clientService.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found!"));
+        List<ConsultaResponse> response = gambleService.consultar(client);
+        return ResponseEntity.ok(response);
     }
 }

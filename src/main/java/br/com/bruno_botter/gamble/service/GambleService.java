@@ -1,7 +1,10 @@
 package br.com.bruno_botter.gamble.service;
 
+import br.com.bruno_botter.gamble.config.exception.GambleNotFoundException;
 import br.com.bruno_botter.gamble.config.exception.InsuficientBalanceException;
+import br.com.bruno_botter.gamble.config.exception.UserNotFoundException;
 import br.com.bruno_botter.gamble.dto.BoardResponse;
+import br.com.bruno_botter.gamble.dto.ConsultaResponse;
 import br.com.bruno_botter.gamble.model.Client;
 import br.com.bruno_botter.gamble.model.Gamble;
 import br.com.bruno_botter.gamble.repository.ClientRepository;
@@ -11,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -29,6 +31,14 @@ public class GambleService {
 
     public List<Gamble> findByClient(Client client) {
         return gambleRepository.findByClient(client);
+    }
+
+    public List<ConsultaResponse> consultar(Client client) throws GambleNotFoundException {
+        List<ConsultaResponse> response = gambleRepository.findClientAndGambleByClientId(client.getClientId());
+        if(response.isEmpty()){
+           throw new GambleNotFoundException("Gamble not found!");
+        }
+        return response;
     }
 
     public Gamble gamble(Gamble gamble) {

@@ -23,26 +23,26 @@ public class Gamble {
     @Embedded
     private BoardResponse result;
     private boolean win;
-    private LocalDateTime createAt;
+    private LocalDateTime dataAposta;
     private LocalDateTime updateAt;
 
     public Gamble() {
     }
 
-    public Gamble(Client client, BigDecimal amountBet, BigDecimal prizeValue, BoardResponse result, boolean win, LocalDateTime createAt) {
+    public Gamble(Client client, BigDecimal amountBet, BigDecimal prizeValue, BoardResponse result, boolean win, LocalDateTime dataAposta) {
         this.client = client;
         this.amountBet = amountBet;
         this.prizeValue = prizeValue;
         this.result = result;
         this.win = win;
-        this.createAt = createAt;
+        this.dataAposta = dataAposta;
     }
 
     public static Gamble fromDto(Client client, GambleRequest gambleRequest) {
         Gamble gamble = new Gamble();
         gamble.setAmountBet(gambleRequest.getAmount());
         gamble.setClient(client);
-        gamble.setCreateAt(LocalDateTime.now());
+        gamble.setDataAposta(LocalDateTime.now());
         return gamble;
     }
 
@@ -80,9 +80,6 @@ public class Gamble {
 
 
 
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
-    }
 
     public boolean isWin() {
         return win;
@@ -100,7 +97,11 @@ public class Gamble {
         this.updateAt = updateAt;
     }
 
-    public LocalDateTime getCreateAt() {
-        return createAt;
+    public LocalDateTime getDataAposta() {
+        return dataAposta;
+    }
+
+    public void setDataAposta(LocalDateTime dataAposta) {
+        this.dataAposta = dataAposta;
     }
 }
