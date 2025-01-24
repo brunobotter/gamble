@@ -14,14 +14,13 @@
    Descrição: Permitir que o usuário visualize o histórico completo de suas apostas, incluindo data, valor apostado, resultado (ganhou ou perdeu) e o saldo após cada aposta.
    E tambem mostrar intervalos de data, exemplo so ver apostas do ultimo mês.
 
+6. Probabilidade Manipulável
+   Descrição: Adicionar uma funcionalidade para alterar a probabilidade de vitória do jogador.
+   
+
 # Proximas features
 
-2. Probabilidade Manipulável
-   Descrição: Adicionar uma funcionalidade para alterar a probabilidade de vitória do jogador.
-   Objetivo: Demonstrar como cassinos podem ajustar as chances de vitória para maximizar seus lucros.
-   Exemplo de implementação:
-   Adicionar um parâmetro de configuração no sistema que permita ajustar a probabilidade de vitória (ex.: 10%, 20%, etc.).
-   Alterar a lógica de checkWinCondition para levar em conta essa probabilidade.
+
 
 3. Simulação de "Quase Vitória"
    Descrição: Implementar uma lógica que mostre ao usuário que ele "quase ganhou" (ex.: duas colunas iguais e uma diferente).

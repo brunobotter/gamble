@@ -9,6 +9,10 @@ import br.com.bruno_botter.gamble.model.Client;
 import br.com.bruno_botter.gamble.model.Gamble;
 import br.com.bruno_botter.gamble.repository.ClientRepository;
 import br.com.bruno_botter.gamble.repository.GambleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,10 +23,15 @@ import java.util.Random;
 @Service
 public class GambleService {
 
+    private static final Logger log = LoggerFactory.getLogger(GambleService.class);
     private final GambleRepository gambleRepository;
     private final ClientRepository clientRepository;
     private final DepositService depositService;
+    @Value("${game.win-probability}")
+    private double winProbability;
 
+
+    @Autowired
     public GambleService(GambleRepository gambleRepository, ClientRepository clientRepository, DepositService depositService) {
         this.gambleRepository = gambleRepository;
         this.clientRepository = clientRepository;
@@ -57,6 +66,7 @@ public class GambleService {
         if (isWin) {
             winAmount = gamble.getAmountBet().multiply(BigDecimal.valueOf(2)); // Exemplo: 2x o valor apostado
             client.setSaldo(client.getSaldo().add(winAmount));
+            log.info("venceu");
         }
 
         // Atualiza os dados da aposta
@@ -71,15 +81,32 @@ public class GambleService {
         return gamble;
     }
 
-    // Gera uma matriz 3x3 de letras aleatórias (Z, X, Y, A)
     private char[][] generateBoard() {
         char[] letters = {'Z', 'X', 'Y', 'A'};
         char[][] board = new char[3][3];
         Random random = new Random();
 
-        for (int i = 0; i < 3; i++) {
+        // Verifica se o jogador deve ganhar com base na probabilidade
+        if (random.nextDouble() < winProbability) {
+
+            char winningChar = letters[random.nextInt(letters.length)];
+            int winningRow = random.nextInt(3);
             for (int j = 0; j < 3; j++) {
-                board[i][j] = letters[random.nextInt(letters.length)];
+                board[winningRow][j] = winningChar;
+            }
+            // Preenche o restante do tabuleiro com caracteres aleatórios
+            for (int i = 0; i < 3; i++) {
+                if (i == winningRow) continue;
+                for (int j = 0; j < 3; j++) {
+                    board[i][j] = letters[random.nextInt(letters.length)];
+                }
+            }
+        } else {
+            // Gera um tabuleiro aleatório
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    board[i][j] = letters[random.nextInt(letters.length)];
+                }
             }
         }
         return board;
