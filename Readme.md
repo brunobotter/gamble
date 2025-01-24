@@ -1,3 +1,7 @@
+# Objetivo dessse projeto e mostrar como uma casa de aposta pode manipular os jogos
+# Projeto totalmente para estudos
+
+
 # Proximas features
 
 1. Histórico de Apostas
