@@ -1,6 +1,14 @@
 # Objetivo dessse projeto e mostrar como uma casa de aposta pode manipular os jogos
 # Projeto totalmente para estudos
 
+# Features ja incluidas
+1. Cadastro cliente
+
+2. Depositos ficticios
+
+3. Apostas básicas
+
+4. Validações e handle de erros basicos
 
 # Proximas features
 
