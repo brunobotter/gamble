@@ -29,7 +29,7 @@ public class GambleService {
     private final DepositService depositService;
     @Value("${game.win-probability}")
     private double winProbability;
-
+    private boolean almostWin = false;
 
     @Autowired
     public GambleService(GambleRepository gambleRepository, ClientRepository clientRepository, DepositService depositService) {
@@ -66,7 +66,7 @@ public class GambleService {
         if (isWin) {
             winAmount = gamble.getAmountBet().multiply(BigDecimal.valueOf(2)); // Exemplo: 2x o valor apostado
             client.setSaldo(client.getSaldo().add(winAmount));
-            log.info("venceu");
+            almostWin = false;
         }
 
         // Atualiza os dados da aposta
@@ -74,6 +74,9 @@ public class GambleService {
         gamble.setPrizeValue(winAmount);
         gamble.setResult(boardToString(board)); // Converte o tabuleiro para string
         gamble.setUpdateAt(LocalDateTime.now());
+        if(almostWin){
+            gamble.setAlmostWin("Puxa voce quase venceu! Não desista!");
+        }
 
         // Salva no repositório (se necessário)
         gambleRepository.save(gamble);
@@ -118,11 +121,28 @@ public class GambleService {
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == board[i][1] && board[i][1] == board[i][2]) return true;
             if (board[0][i] == board[1][i] && board[1][i] == board[2][i]) return true;
+            // Verifica "quase ganhou" nas linhas
+            if (board[i][0] == board[i][1] || board[i][1] == board[i][2] || board[i][0] == board[i][2]) {
+                almostWin = true;
+            }
+
+            // Verifica "quase ganhou" nas colunas
+            if (board[0][i] == board[1][i] || board[1][i] == board[2][i] || board[0][i] == board[2][i]) {
+                almostWin = true;
+            }
         }
 
         // Verifica diagonais
         if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) return true;
         if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) return true;
+
+        // Verifica "quase ganhou" nas diagonais
+        if (board[0][0] == board[1][1] || board[1][1] == board[2][2] || board[0][0] == board[2][2]) {
+            almostWin = true;
+        }
+        if (board[0][2] == board[1][1] || board[1][1] == board[2][0] || board[0][2] == board[2][0]) {
+            almostWin = true;
+        }
 
         return false;
     }

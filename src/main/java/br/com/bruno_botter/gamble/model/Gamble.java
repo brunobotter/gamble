@@ -25,6 +25,7 @@ public class Gamble {
     private boolean win;
     private LocalDateTime dataAposta;
     private LocalDateTime updateAt;
+    private String almostWin;
 
     public Gamble() {
     }
@@ -44,6 +45,14 @@ public class Gamble {
         gamble.setClient(client);
         gamble.setDataAposta(LocalDateTime.now());
         return gamble;
+    }
+
+    public String getAlmostWin() {
+        return almostWin;
+    }
+
+    public void setAlmostWin(String almostWin) {
+        this.almostWin = almostWin;
     }
 
     public Client getClient() {

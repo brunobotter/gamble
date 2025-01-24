@@ -11,12 +11,14 @@ public class GambleResponse {
     private BoardResponse board;
     private boolean win;
     private BigDecimal winAmount;
+    private String almostWin;
 
 
     public GambleResponse(Gamble gamble) {
         this.board = gamble.getResult();
         this.win = gamble.isWin();
         this.winAmount = gamble.getPrizeValue();
+        this.almostWin = gamble.getAlmostWin();
     }
 
     public GambleResponse() {
@@ -32,5 +34,9 @@ public class GambleResponse {
 
     public BigDecimal getWinAmount() {
         return winAmount;
+    }
+
+    public String getAlmostWin() {
+        return almostWin;
     }
 }

@@ -25,8 +25,6 @@
 3. Simulação de "Quase Vitória"
    Descrição: Implementar uma lógica que mostre ao usuário que ele "quase ganhou" (ex.: duas colunas iguais e uma diferente).
    Objetivo: Demonstrar como sistemas podem manipular a experiência do usuário para incentivá-lo a continuar apostando.
-   Exemplo de implementação:
-   Alterar a geração do tabuleiro para criar situações de "quase vitória" com mais frequência.
 
 4. Sistema de Recompensas
    Descrição: Criar um sistema de recompensas para o jogador, como bônus por número de apostas ou por perdas consecutivas.
